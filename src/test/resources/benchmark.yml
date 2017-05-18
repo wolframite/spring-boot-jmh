@@ -1,0 +1,11 @@
+---
+benchmark:
+  global:
+    testclassregexpattern: ".*Benchmark*."
+    resultfileprefix: "jmh-benchmark-result-"
+
+  warmup.iterations: 5
+  test:
+    iterations: 5
+    threads: 4
+    forks: 1
