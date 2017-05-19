@@ -9,27 +9,39 @@ public class StartsWithBenchmark {
 
     @State(Scope.Benchmark)
     public static class Keys {
-        String key1 = "MY_productSuperCoolProduct";
-        String key2 = "alohaMY_productSuperCoolProduct";
-        String key3 = "MY_productSuperCoolProductaloha";
+        String key1 = "MY_product_NA146AC50OCBSG_en";
     }
 
     @Benchmark
-    public void testStartsWith(Keys keys) {
-        keys.key1.startsWith("aloha");
-        keys.key2.startsWith("aloha");
+    public void testReferenceStartsWith(Keys keys) {
+        boolean isProduct = keys.key1.startsWith("MY_product_");
     }
 
     @Benchmark
-    public void testEndsWith(Keys keys) {
-        keys.key2.startsWith("aloha");
-        keys.key3.startsWith("aloha");
+    public void testReferenceIndexOf(Keys keys) {
+        boolean isProduct = keys.key1.indexOf("MY_product_") == 0;
     }
 
     @Benchmark
-    public void testIndexOf(Keys keys) {
-        keys.key1.indexOf("aloha");
-        keys.key2.indexOf("aloha");
+    public void testDoubleIndexOf(Keys keys) {
+        boolean isProduct = keys.key1.indexOf("MY_product_") == 0 && keys.key1.indexOf("MY_product_index") != -1;
+    }
+
+    @Benchmark
+    public void testIndexOfAndContains(Keys keys) {
+        boolean isProduct = keys.key1.indexOf("MY_product_") == 0 && !keys.key1.contains("MY_product_index");
+    }
+
+    @Benchmark
+    public void testIndexOfAndUppercase(Keys keys) {
+        boolean isProduct = keys.key1.indexOf("MY_product_") == 0 &&
+            (keys.key1.charAt(11) >= 65 && keys.key1.charAt(11) <= 90);
+    }
+
+    @Benchmark
+    public void testStartsWithAndUppercase(Keys keys) {
+        boolean isProduct = keys.key1.startsWith("MY_product_") &&
+            (keys.key1.charAt(11) >= 65 && keys.key1.charAt(11) <= 90);
     }
 
 }
